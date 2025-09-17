@@ -12,6 +12,12 @@
         public string Filename { get; set; } = string.Empty;
 
         public DateTime CreateDate { get; set; }
+
+        // Foreign key
+        public int CategoryId { get; set; }
+
+        // Navigation Property
+        public Category? Category { get; set; } // nullable
     }
 
 }
