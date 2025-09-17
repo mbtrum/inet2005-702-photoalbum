@@ -24,6 +24,16 @@ namespace PhotoAlbum.Controllers
             return View();
         }
 
+        // My first action method
+        public IActionResult Hello()
+        {
+            return View();
+        }
+
+
+
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
