@@ -15,8 +15,31 @@ namespace PhotoAlbum.Controllers
         }
 
         public IActionResult Index()
-        {
-            return View();
+        {   
+            // Create a sample photos list
+
+            List<Photo> photos = new List<Photo>();
+
+            Photo photo1 = new Photo();
+            photo1.PhotoId = 1;
+            photo1.Title = "Penny";
+            photo1.Description = "My cat Penny who lives in Toronto";
+            photo1.Filename = "penny.jpg";
+            photo1.CreateDate = DateTime.Now;
+
+            Photo photo2 = new Photo();
+            photo2.PhotoId = 2;
+            photo2.Title = "Audrey";
+            photo2.Description = "Audrey is an old pup.";
+            photo2.Filename = "audrey.jpg";
+            photo2.CreateDate = DateTime.Now;
+
+            photos.Add(photo1);
+            photos.Add(photo2);
+
+            // Pass the photos List<> into the View
+
+            return View(photos);
         }
 
         public IActionResult Privacy()
@@ -25,8 +48,11 @@ namespace PhotoAlbum.Controllers
         }
 
         // My first action method
-        public IActionResult Hello()
+        public IActionResult Hello(int id)
         {
+
+            int num = id;
+
             return View();
         }
 
