@@ -14,10 +14,13 @@ namespace PhotoAlbum.Models
 
         public string Filename { get; set; } = string.Empty;
 
+        public string Camera {  get; set; } = string.Empty;
+
         [Display(Name = "Created")]
         public DateTime CreateDate { get; set; }
 
         // Foreign key
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
         // Navigation Property

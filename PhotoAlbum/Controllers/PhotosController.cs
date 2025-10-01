@@ -20,36 +20,11 @@ namespace PhotoAlbum.Controllers
             _context = context;
         }
 
-        // GET: Photos
-        public async Task<IActionResult> Index()
-        {
-            var photoAlbumContext = _context.Photo.Include(p => p.Category);
-            return View(await photoAlbumContext.ToListAsync());
-        }
-
-        // GET: Photos/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var photo = await _context.Photo
-                .Include(p => p.Category)
-                .FirstOrDefaultAsync(m => m.PhotoId == id);
-            if (photo == null)
-            {
-                return NotFound();
-            }
-
-            return View(photo);
-        }
-
         // GET: Photos/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId");
+            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "Title");
+
             return View();
         }
 
@@ -58,15 +33,22 @@ namespace PhotoAlbum.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PhotoId,Title,Description,Filename,CreateDate,CategoryId")] Photo photo)
+        public async Task<IActionResult> Create([Bind("PhotoId,Title,Description,Camera,Filename,CategoryId")] Photo photo)
         {
+            // Initialize values
+            photo.CreateDate = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 _context.Add(photo);
+
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                
+                return RedirectToAction(nameof(Index),"Home"); // Go back to Home Index
             }
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId", photo.CategoryId);
+
+            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "Title", photo.CategoryId);
+            
             return View(photo);
         }
 
@@ -79,11 +61,14 @@ namespace PhotoAlbum.Controllers
             }
 
             var photo = await _context.Photo.FindAsync(id);
+
             if (photo == null)
             {
                 return NotFound();
             }
+
             ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId", photo.CategoryId);
+
             return View(photo);
         }
 
@@ -104,6 +89,7 @@ namespace PhotoAlbum.Controllers
                 try
                 {
                     _context.Update(photo);
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -117,9 +103,12 @@ namespace PhotoAlbum.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "CategoryId", photo.CategoryId);
+
             return View(photo);
         }
 
@@ -134,6 +123,7 @@ namespace PhotoAlbum.Controllers
             var photo = await _context.Photo
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(m => m.PhotoId == id);
+
             if (photo == null)
             {
                 return NotFound();
@@ -148,12 +138,14 @@ namespace PhotoAlbum.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var photo = await _context.Photo.FindAsync(id);
+
             if (photo != null)
             {
                 _context.Photo.Remove(photo);
             }
 
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
