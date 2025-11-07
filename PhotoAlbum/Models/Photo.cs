@@ -24,8 +24,10 @@ namespace PhotoAlbum.Models
         [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
-        // Navigation Property
+        // Navigation Properties
         public Category? Category { get; set; } // nullable
+
+        public List<Comment>? Comments { get; set; } // nullable
 
         [NotMapped]
         [Display(Name = "Photograph")]
