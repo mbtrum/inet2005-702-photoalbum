@@ -42,6 +42,7 @@ namespace PhotoAlbum.Controllers
 
             var photo = await _context.Photo
                 .Include(p => p.Category)
+                .Include(p => p.Comments)
                 .FirstOrDefaultAsync(m => m.PhotoId == id);
 
             if (photo == null)
