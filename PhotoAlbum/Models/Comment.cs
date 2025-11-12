@@ -2,16 +2,19 @@
 {
     public class Comment
     {
-        // Primary key
+        // primary key
         public int CommentId { get; set; }
-        public string Author { get; set; } = string.Empty;
+
         public string Body { get; set; } = string.Empty;
+
+        public string Author { get; set; } = string.Empty;
+
         public DateTime CreateDate { get; set; }
 
-        // Foreign key
+        // foreign key
         public int PhotoId { get; set; }
 
-        // Navigation Property
+        // navigation property
         public Photo? Photo { get; set; } // nullable
     }
 }

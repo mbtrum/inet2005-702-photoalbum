@@ -12,8 +12,8 @@ using PhotoAlbum.Data;
 namespace PhotoAlbum.Migrations
 {
     [DbContext(typeof(PhotoAlbumContext))]
-    [Migration("20251107174511_AddCommemtModel")]
-    partial class AddCommemtModel
+    [Migration("20251112142451_AddCommentModel")]
+    partial class AddCommentModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
